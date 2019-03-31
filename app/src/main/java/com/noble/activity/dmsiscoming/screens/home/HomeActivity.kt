@@ -1,7 +1,8 @@
-package com.noble.activity.dmsiscoming
+package com.noble.activity.dmsiscoming.screens.home
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.noble.activity.dmsiscoming.R
 
 class HomeActivity : AppCompatActivity() {
 
