@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DMBIsComing</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+
+    <string name="please_enter_email_and_password">Please enter email and password</string>
 </resources>
