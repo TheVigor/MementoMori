@@ -6,6 +6,7 @@ import com.noble.activity.dmsiscoming.R
 import com.noble.activity.dmsiscoming.screens.common.AuthGuard
 import com.noble.activity.dmsiscoming.screens.common.BaseActivity
 import com.noble.activity.dmsiscoming.screens.common.setupAuthGuard
+import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : BaseActivity(1) {
 
@@ -14,8 +15,11 @@ class ProfileActivity : BaseActivity(1) {
         setContentView(R.layout.activity_profile)
         setupBottomNavigation()
 
-        setupAuthGuard {
+        logoutLabel.setOnClickListener {
+            goToLogin()
+        }
 
+        setupAuthGuard {
         }
     }
 }
