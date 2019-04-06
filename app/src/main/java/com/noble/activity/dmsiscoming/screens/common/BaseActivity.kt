@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import com.noble.activity.dmsiscoming.R
 import com.noble.activity.dmsiscoming.screens.home.HomeActivity
 import com.noble.activity.dmsiscoming.screens.login.LoginActivity
+import com.noble.activity.dmsiscoming.screens.profile.ProfileActivity
 import kotlinx.android.synthetic.main.bottom_navigation_view.*
 
 abstract class BaseActivity(val navNumber: Int) : AppCompatActivity() {
@@ -45,7 +46,7 @@ abstract class BaseActivity(val navNumber: Int) : AppCompatActivity() {
     }
 
     fun setupBottomNavigation() {
-        bottom_navigation_view.setIconSize(50f, 50f)
+        bottom_navigation_view.setIconSize(29f, 29f)
         bottom_navigation_view.setTextVisibility(false)
         bottom_navigation_view.enableItemShiftingMode(false)
         bottom_navigation_view.enableShiftingMode(false)
@@ -58,10 +59,9 @@ abstract class BaseActivity(val navNumber: Int) : AppCompatActivity() {
             val nextActivity =
                 when (it.itemId) {
                     R.id.nav_item_home -> HomeActivity::class.java
-                    //R.id.nav_item_profile -> ProfileActivity::class.java
-                    else -> {
-                        null
-                    }
+                    R.id.nav_item_profile -> ProfileActivity::class.java
+                    else -> null
+
                 }
             if (nextActivity != null) {
                 val intent = Intent(this, nextActivity)
