@@ -27,4 +27,38 @@ class DembelStorage (context: Context) {
 
     fun isDembelLoggedIn() = !dembelName.trim().isEmpty() &&
             startDate != 0L && endDate != 0L
+
+    fun validateDembel(name: String, start: Long, end: Long): LoginState {
+        if (name.trim().isEmpty()) {
+            //context.showToast("Soldier name can't be empty")
+            return LoginState.EMPTY_NAME
+        }
+
+        if (start == 0L) {
+            //context.showToast("Start date can't be empty")
+            return LoginState.EMPTY_START_DATE
+        }
+
+        if (end == 0L) {
+            //context.showToast("End date can't be empty")
+            return LoginState.EMPTY_END_DATE
+        }
+
+        if (start > end) {
+            //context.showToast("End date should be after start date")
+            return LoginState.START_GREATER_END
+        }
+
+        return LoginState.SUCCESS
+    }
+
+    fun updateDembel(name: String, start: Long, end: Long) {
+        this.apply {
+            dembelName = name
+            startDate = start
+            endDate = end
+        }
+    }
+
+
 }

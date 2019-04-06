@@ -4,8 +4,10 @@ import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import com.noble.activity.dmsiscoming.R
+import com.noble.activity.dmsiscoming.dembelStorage
 import com.noble.activity.dmsiscoming.screens.common.CommonViewModel
 import com.noble.activity.dmsiscoming.screens.common.SingleLiveEvent
+import com.noble.activity.dmsiscoming.storage.LoginState
 
 class LoginViewModel(private val app: Application,
                      private val commonViewModel: CommonViewModel) : ViewModel() {
@@ -13,14 +15,19 @@ class LoginViewModel(private val app: Application,
     val goToHomeScreen: LiveData<Unit> = _goToHomeScreen
 
     fun onLoginClick(email: String, password: String) {
-        if (validate(email, password)) {
-            _goToHomeScreen.value = Unit
-        } else {
-            commonViewModel.setErrorMessage(app.getString(R.string.please_enter_email_and_password))
+        when (dembelStorage.validateDembel("Ivan", 1 , 2)) {
+            LoginState.SUCCESS -> {
+                dembelStorage.updateDembel("Ivan", 1 , 2)
+                _goToHomeScreen.value = Unit
+            }
+            LoginState.EMPTY_NAME -> commonViewModel.setErrorMessage("Soldier name can't be empty")
+            LoginState.EMPTY_START_DATE -> commonViewModel.setErrorMessage("Start date can't be empty")
+            LoginState.EMPTY_END_DATE -> commonViewModel.setErrorMessage("End date can't be empty")
+            LoginState.START_GREATER_END -> commonViewModel.setErrorMessage("End date should be after start date")
         }
     }
 
-    private fun validate(email: String, password: String) =
+    private fun processLoginState(email: String, password: String) =
         email.isNotEmpty() && password.isNotEmpty()
 
 }
