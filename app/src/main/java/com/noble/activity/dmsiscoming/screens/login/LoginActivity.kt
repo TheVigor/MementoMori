@@ -10,7 +10,7 @@ import com.noble.activity.dmsiscoming.screens.common.BaseActivity
 import com.noble.activity.dmsiscoming.screens.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BaseActivity(), View.OnClickListener {
+class LoginActivity : BaseActivity(-1), View.OnClickListener {
     private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -6,12 +6,14 @@ import com.noble.activity.dmsiscoming.R
 import com.noble.activity.dmsiscoming.screens.common.BaseActivity
 import com.noble.activity.dmsiscoming.screens.common.setupAuthGuard
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : BaseActivity(0) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        setupAuthGuard {}
+        setupAuthGuard {
+            setupBottomNavigation()
+        }
     }
 }
