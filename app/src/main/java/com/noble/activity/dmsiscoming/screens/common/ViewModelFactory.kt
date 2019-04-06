@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.noble.activity.dmsiscoming.screens.login.LoginViewModel
+import com.noble.activity.dmsiscoming.screens.profile.ProfileViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val app: Application,
@@ -11,7 +12,9 @@ class ViewModelFactory(private val app: Application,
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(app, commonViewModel) as T
+            return LoginViewModel(commonViewModel) as T
+        } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java))  {
+            return ProfileViewModel(commonViewModel) as T
         } else {
             error("Unknown view model class $modelClass")
         }

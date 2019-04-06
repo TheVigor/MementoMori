@@ -9,8 +9,7 @@ import com.noble.activity.dmsiscoming.screens.common.CommonViewModel
 import com.noble.activity.dmsiscoming.screens.common.SingleLiveEvent
 import com.noble.activity.dmsiscoming.storage.LoginState
 
-class LoginViewModel(private val app: Application,
-                     private val commonViewModel: CommonViewModel) : ViewModel() {
+class LoginViewModel(private val commonViewModel: CommonViewModel) : ViewModel() {
     private val _goToHomeScreen = SingleLiveEvent<Unit>()
     val goToHomeScreen: LiveData<Unit> = _goToHomeScreen
 
