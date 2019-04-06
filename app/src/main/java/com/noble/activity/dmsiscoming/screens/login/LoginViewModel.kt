@@ -1,22 +1,24 @@
 package com.noble.activity.dmsiscoming.screens.login
 
-import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import com.noble.activity.dmsiscoming.R
 import com.noble.activity.dmsiscoming.dembelStorage
 import com.noble.activity.dmsiscoming.screens.common.CommonViewModel
 import com.noble.activity.dmsiscoming.screens.common.SingleLiveEvent
 import com.noble.activity.dmsiscoming.storage.LoginState
+import java.text.SimpleDateFormat
+import java.util.*
+
+val DATE_FORMAT = "dd/MM/yyyy"
 
 class LoginViewModel(private val commonViewModel: CommonViewModel) : ViewModel() {
     private val _goToHomeScreen = SingleLiveEvent<Unit>()
     val goToHomeScreen: LiveData<Unit> = _goToHomeScreen
 
-    fun onLoginClick(email: String, password: String) {
-        when (dembelStorage.validateDembel("Ivan", 1 , 2)) {
+    fun onLoginClick(name: String, start: Long, end: Long) {
+        when (dembelStorage.validateDembel(name, start , end)) {
             LoginState.SUCCESS -> {
-                dembelStorage.updateDembel("Ivan", 1 , 2)
+                dembelStorage.updateDembel(name, start , end)
                 _goToHomeScreen.value = Unit
             }
             LoginState.EMPTY_NAME -> commonViewModel.setErrorMessage("Soldier name can't be empty")
@@ -26,7 +28,23 @@ class LoginViewModel(private val commonViewModel: CommonViewModel) : ViewModel()
         }
     }
 
-    private fun processLoginState(email: String, password: String) =
-        email.isNotEmpty() && password.isNotEmpty()
+    private fun mkCalendar(mDay: Int, mMonth: Int, mYear: Int): Calendar {
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.YEAR, mYear)
+        cal.set(Calendar.MONTH, mMonth)
+        cal.set(Calendar.DAY_OF_MONTH, mDay)
 
+        cal.set(Calendar.HOUR_OF_DAY, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
+
+        return cal
+    }
+
+    fun getDateLong(mDay: Int, mMonth: Int, mYear: Int): Long {
+
+        val cal = mkCalendar(mDay, mMonth, mYear)
+        return cal.timeInMillis
+    }
 }
