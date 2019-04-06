@@ -7,10 +7,11 @@ import com.noble.activity.dmsiscoming.dembelStorage
 import com.noble.activity.dmsiscoming.screens.common.CommonViewModel
 import com.noble.activity.dmsiscoming.screens.common.SingleLiveEvent
 import com.noble.activity.dmsiscoming.storage.LoginState
+import com.noble.activity.dmsiscoming.util.mkCalendar
+import com.noble.activity.dmsiscoming.util.mkCalendarMills
+import com.noble.activity.dmsiscoming.util.mkCalendarStr
 import java.text.SimpleDateFormat
 import java.util.*
-
-val DATE_FORMAT = "dd/MM/yyyy"
 
 class LoginViewModel(private val commonViewModel: CommonViewModel) : ViewModel() {
     private val _goToHomeScreen = SingleLiveEvent<Unit>()
@@ -35,31 +36,12 @@ class LoginViewModel(private val commonViewModel: CommonViewModel) : ViewModel()
         }
     }
 
-    private fun mkCalendar(mDay: Int, mMonth: Int, mYear: Int): Calendar {
-        val cal = Calendar.getInstance()
-        cal.set(Calendar.YEAR, mYear)
-        cal.set(Calendar.MONTH, mMonth)
-        cal.set(Calendar.DAY_OF_MONTH, mDay)
-
-        cal.set(Calendar.HOUR_OF_DAY, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
-
-        return cal
-    }
-
     fun getDateLong(mDay: Int, mMonth: Int, mYear: Int): Long {
-        val cal = mkCalendar(mDay, mMonth, mYear)
-        return cal.timeInMillis
+        return mkCalendarMills(mDay, mMonth, mYear)
     }
 
     fun updateDateStr(mDay: Int, mMonth: Int, mYear: Int, isStartDate: Boolean) {
-
-        val cal = mkCalendar(mDay, mMonth, mYear)
-        val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
-
-        val txtDate = sdf.format(cal.time)
+        val txtDate = mkCalendarStr(mDay, mMonth, mYear)
 
         if (isStartDate) {
             startDateStr.value = txtDate
