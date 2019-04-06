@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.noble.activity.dmsiscoming.R
 import com.noble.activity.dmsiscoming.screens.home.HomeActivity
 import com.noble.activity.dmsiscoming.screens.login.LoginActivity
@@ -56,6 +57,14 @@ abstract class BaseActivity(val navNumber: Int) : AppCompatActivity() {
             bottom_navigation_view.setIconTintList(i, null)
 
         bottom_navigation_view.setOnNavigationItemSelectedListener {
+            if (it.itemId == R.id.nav_item_home && navNumber == 0) {
+                return@setOnNavigationItemSelectedListener true
+            }
+
+            if (it.itemId == R.id.nav_item_profile && navNumber == 1) {
+                return@setOnNavigationItemSelectedListener true
+            }
+            
             val nextActivity =
                 when (it.itemId) {
                     R.id.nav_item_home -> HomeActivity::class.java
