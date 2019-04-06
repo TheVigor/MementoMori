@@ -37,10 +37,20 @@ class LoginActivity : BaseActivity(-1), View.OnClickListener {
         loginButton.setOnClickListener(this)
 
         loginViewModel = initViewModel()
+
         loginViewModel.goToHomeScreen.observe(this, Observer {
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         })
+
+        loginViewModel.startDateStr.observe(this, Observer {
+            startDateButton.text = it
+        })
+
+        loginViewModel.endDateStr.observe(this, Observer {
+            endDateButton.text = it
+        })
+
     }
 
     override fun onClick(view: View) {
@@ -49,11 +59,13 @@ class LoginActivity : BaseActivity(-1), View.OnClickListener {
                 DatePickerDialog(this,
                     DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, mDay ->
                         startDate = loginViewModel.getDateLong(mDay, mMonth, mYear)
+                        loginViewModel.updateDateStr(mDay, mMonth, mYear, true)
                     }, year, month, day).show()
             R.id.endDateButton ->
                 DatePickerDialog(this,
                     DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, mDay ->
                         endDate = loginViewModel.getDateLong(mDay, mMonth, mYear)
+                        loginViewModel.updateDateStr(mDay, mMonth, mYear, false)
                     }, year, month, day).show()
             R.id.loginButton ->
                 loginViewModel.onLoginClick(

@@ -1,6 +1,7 @@
 package com.noble.activity.dmsiscoming.screens.login
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.noble.activity.dmsiscoming.dembelStorage
 import com.noble.activity.dmsiscoming.screens.common.CommonViewModel
@@ -14,6 +15,12 @@ val DATE_FORMAT = "dd/MM/yyyy"
 class LoginViewModel(private val commonViewModel: CommonViewModel) : ViewModel() {
     private val _goToHomeScreen = SingleLiveEvent<Unit>()
     val goToHomeScreen: LiveData<Unit> = _goToHomeScreen
+
+    private val _startDateStr = MutableLiveData<String>()
+    val startDateStr: MutableLiveData<String> = _startDateStr
+
+    private val _endDateStr = MutableLiveData<String>()
+    val endDateStr: MutableLiveData<String> = _endDateStr
 
     fun onLoginClick(name: String, start: Long, end: Long) {
         when (dembelStorage.validateDembel(name, start , end)) {
@@ -43,8 +50,24 @@ class LoginViewModel(private val commonViewModel: CommonViewModel) : ViewModel()
     }
 
     fun getDateLong(mDay: Int, mMonth: Int, mYear: Int): Long {
-
         val cal = mkCalendar(mDay, mMonth, mYear)
         return cal.timeInMillis
     }
+
+    fun updateDateStr(mDay: Int, mMonth: Int, mYear: Int, isStartDate: Boolean) {
+
+        val cal = mkCalendar(mDay, mMonth, mYear)
+        val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
+
+        val txtDate = sdf.format(cal.time)
+
+        if (isStartDate) {
+            startDateStr.value = txtDate
+        } else {
+            endDateStr.value = txtDate
+        }
+    }
+
+
+
 }
