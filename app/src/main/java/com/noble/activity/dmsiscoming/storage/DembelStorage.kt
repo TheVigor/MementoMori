@@ -60,5 +60,5 @@ class DembelStorage (context: Context) {
         }
     }
 
-
+    fun resetDembel() = updateDembel("", 0, 0)
 }
